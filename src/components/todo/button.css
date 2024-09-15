@@ -1,8 +1,8 @@
 .btn-task {
     all: unset;
-    width: 25%;
+    width: 15%;
     padding: 10px 20px;
-    background-color: #a128d1;
+    background-color: #6abd45;
     cursor: pointer;
     font: inherit;
     font-weight: 700;
@@ -13,8 +13,8 @@
 }
 
 .btn-task:hover {
-    background-color: #ffffff;
-    color: #a128d1;
+    background-color: #41712d;
+    color: #ffffff;
     transition: 0.15s ease-in;
 }
 

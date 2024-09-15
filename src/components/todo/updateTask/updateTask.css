@@ -4,12 +4,11 @@
     outline: none;
     font: inherit;
     display: block;
-    width: 75%;
+    width: 85%;
 }
 
 .update-task-form {
-    border: 2px solid #a128d1;
+    border: 2px solid #6abd45;
     display: flex;
-    margin-bottom: 20px;
 }
 

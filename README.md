@@ -1,8 +1,15 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+root bg: #8758fd
+app bg: #1a1a40
+crossed text: #6d6f7a
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+hover btn: #5f3eb0
+
+
+Green-Themed Palette:
+Root background: #6abd45 (Vibrant green, similar energy to your purple root)
+App background: #2d3e24 (Dark green, offering contrast like your current dark app background)
+Crossed text: #79877a (Muted gray-green for a subtle effect like your grayish blue)
+Hover button: #41712d (Rich, darker green for hover, like your dark purple hover)
