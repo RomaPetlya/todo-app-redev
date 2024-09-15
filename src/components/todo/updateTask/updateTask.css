@@ -1,0 +1,15 @@
+.task-update {
+    all: unset;
+    padding: 18px 8px;
+    outline: none;
+    font: inherit;
+    display: block;
+    width: 75%;
+}
+
+.update-task-form {
+    border: 2px solid #a128d1;
+    display: flex;
+    margin-bottom: 20px;
+}
+

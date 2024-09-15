@@ -1,0 +1,20 @@
+.btn-task {
+    all: unset;
+    width: 25%;
+    padding: 10px 20px;
+    background-color: #a128d1;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    border: none;
+    display: block;
+    text-align: center;
+    transition: 0.15s ease-in;
+}
+
+.btn-task:hover {
+    background-color: #ffffff;
+    color: #a128d1;
+    transition: 0.15s ease-in;
+}
+

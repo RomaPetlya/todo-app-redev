@@ -1,0 +1,14 @@
+.task-input {
+    all: unset;
+    padding: 20px;
+    outline: none;
+    font: inherit;
+    display: block;
+    width: 75%;
+}
+
+.task-form {
+    border: 2px solid #a128d1;
+    display: flex;
+}
+
