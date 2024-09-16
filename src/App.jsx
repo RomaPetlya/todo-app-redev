@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { TaskInput } from "./components/todo/task-form/taskInput.jsx";
+import { TaskInput } from "./components/todo/task-input/taskInput.jsx";
 import { Tasks } from "./components/todo/tasks/tasks.jsx";
 import { NoTasks } from "./components/todo/noTasks/noTasks.jsx";
 import { Header } from "./components/todo/header/header.jsx";
