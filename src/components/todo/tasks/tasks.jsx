@@ -1,17 +1,20 @@
 import React from "react";
-import { Task } from "../task/task";
+import Task from "../task/task";
 import "./tasks.css"
+import { WithLogger } from "../../withLogger/withLogger";
 
-export const Tasks = ({ tasks, onDelete, onToggle, onUpdate }) => {
+const Tasks = ({ tasks, onDelete, onToggle, onUpdate }) => {
     return (
         <>
             <div className="tasks">
                 {tasks.map((task) => {
                     return (
-                        <Task key={task.id} task={task} onUpdate={onUpdate} onDelete={onDelete} onToggle={onToggle} />
+                        <Task key={task.id} task={task} onUpdate={onUpdate} onDelete={onDelete} onToggle={onToggle}/>
                     );
                 })}
             </div>
         </>
     );
 };
+
+export default WithLogger(Tasks)

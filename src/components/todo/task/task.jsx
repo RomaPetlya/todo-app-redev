@@ -4,8 +4,9 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TaskUpdate } from "../updateTask/updateTask";
+import { WithLogger } from "../../withLogger/withLogger";
 
-export const Task = ({ task, onDelete, onToggle, onUpdate }) => {
+const Task = ({ task, onDelete, onToggle, onUpdate }) => {
     const [isEditable, setEditable] = useState(false);
     const inputRef = useRef(null);
     const handleEdit = () => {
@@ -45,3 +46,5 @@ export const Task = ({ task, onDelete, onToggle, onUpdate }) => {
         );
     }
 };
+
+export default WithLogger(Task)
