@@ -1,11 +1,6 @@
 # React + Vite
 
 
-root bg: #8758fd
-app bg: #1a1a40
-crossed text: #6d6f7a
-
-hover btn: #5f3eb0
 
 
 Green-Themed Palette:
