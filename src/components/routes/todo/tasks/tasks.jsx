@@ -1,7 +1,7 @@
 import React from "react";
-import Task from "../task/task";
+import Task from "../task/task.jsx";
 import "./tasks.css"
-import { WithLogger } from "../../withLogger/withLogger";
+import { WithLogger } from "../../../withLogger/withLogger.jsx";
 
 const Tasks = ({ tasks, onDelete, onToggle, onUpdate }) => {
     return (

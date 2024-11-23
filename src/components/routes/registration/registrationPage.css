@@ -1,0 +1,60 @@
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 40px 0;
+}
+
+.registration-field {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.registration-input {
+    all: unset;
+    padding: 10px;
+    outline: none;
+    border: 2px solid #6abd45;
+    width: 65%;
+}
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gender-field {
+    display: flex;
+    width: 25%;
+    background-color: #2d3e24;
+    border: 2px solid #6abd45;
+}
+.gender-radio {
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    padding: 8px;
+    transition: 0.15s ease-in;
+}
+.gender-radio:hover {
+    background-color: #6abd45;
+    transition: 0.15s ease-in;
+}
+.gender-radio.active {
+    background-color: #6abd45;
+}
+
+.field-error {
+    margin: 0 auto;
+    color: red;
+    background-color: #fff;
+    border-radius: 3px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.button {
+    margin-bottom: 40px;
+}
