@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../../../button/button.jsx";
+import { Button } from "../../button/button";
 import "./updateTask.css";
 
 // eslint-disable-next-line react/prop-types

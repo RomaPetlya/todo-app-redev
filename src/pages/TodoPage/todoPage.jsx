@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import {Header} from "./header/header.jsx";
-import {TaskInput} from "./task-input/taskInput.jsx";
-import Tasks from "./tasks/tasks.jsx";
-import {NoTasks} from "./noTasks/noTasks.jsx";
+import {Header} from "../../components/mainPage/header/header.jsx";
+import {TaskInput} from "../../components/mainPage/taskInput/taskInput.jsx";
+import TaskList from "../../components/mainPage/taskList/taskList.jsx";
+import {NoTasks} from "../../components/mainPage/noTasks/noTasks.jsx";
 
-export const TodoMain = () => {
+export const TodoPage = () => {
     const [tasks, setTasks] = useState([
         {id: uuidv4(), text: "lala", isDone: false},
         {id: uuidv4(), text: "dadada", isDone: false},
@@ -53,7 +53,7 @@ export const TodoMain = () => {
                     <Header/>
                     <TaskInput onAdd={addTask} btnText="Add task"/>
                     {tasks.length > 0 ? (
-                        <Tasks
+                        <TaskList
                             tasks={tasks}
                             onDelete={deleteTask}
                             onToggle={toggleDone}

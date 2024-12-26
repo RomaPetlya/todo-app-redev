@@ -1,8 +1,10 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import "./registrationPage.css";
-import {Button} from "../../button/button.jsx";
-
+import {Button} from "../../components/button/button.jsx";
+import { api } from "../../api/todo-api.js";
+import { Link } from "react-router-dom";
+import { FormInput } from "../../components/formField/formField.jsx";
 
 export const RegistrationPage = () => {
     const {
@@ -11,10 +13,14 @@ export const RegistrationPage = () => {
         formState: {errors},
         watch,
     } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async (data) => {
+        await api.registration(data)
+        console.log(data);
+    }
     console.log(errors);
 
     return (
+        <>
         <div className="app-todo">
             <div className="container">
                 <form
@@ -132,5 +138,11 @@ export const RegistrationPage = () => {
                 </div>
             </div>
         </div>
+         <div className="link">
+         <p>Don't have an account?</p>
+         <Link to="/login">Sign Up</Link>
+     </div>
+   
+     </>
     );
 }

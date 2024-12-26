@@ -1,0 +1,21 @@
+.form-field {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-input {
+    all: unset;
+    padding: 10px;
+    outline: none;
+    border: 2px solid #6abd45;
+    width: 65%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 40px 0;
+}

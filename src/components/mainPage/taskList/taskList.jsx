@@ -1,9 +1,9 @@
 import React from "react";
 import Task from "../task/task.jsx";
-import "./tasks.css"
-import { WithLogger } from "../../../withLogger/withLogger.jsx";
+import "./taskList.css"
+import { WithLogger } from "../../withLogger/withLogger.jsx";
 
-const Tasks = ({ tasks, onDelete, onToggle, onUpdate }) => {
+const TaskList = ({ tasks, onDelete, onToggle, onUpdate }) => {
     return (
         <>
             <div className="tasks">
@@ -17,4 +17,4 @@ const Tasks = ({ tasks, onDelete, onToggle, onUpdate }) => {
     );
 };
 
-export default WithLogger(Tasks)
+export default WithLogger(TaskList)
