@@ -1,148 +1,136 @@
-import React from "react";
-import {useForm} from "react-hook-form";
-import "./registrationPage.css";
-import {Button} from "../../components/button/button.jsx";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import "./../comon-page.css";
+import { Button } from "../../components/button/button.jsx";
 import { api } from "../../api/todo-api.js";
 import { Link } from "react-router-dom";
 import { FormInput } from "../../components/formField/formField.jsx";
+
+const registrationFields = [
+    {
+        label: "Username:",
+        id: "username",
+        type: "text",
+        placeholder: "Username",
+        validationRules: {
+            required: "Username is required",
+            maxLength: 24,
+        },
+    },
+    {
+        label: "Email:",
+        id: "email",
+        type: "email",
+        placeholder: "Email",
+        validationRules: {
+            required: "Email is required",
+            pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email format",
+            },
+        },
+    },
+    {
+        label: "Password:",
+        id: "password",
+        type: "password",
+        placeholder: "Password",
+        validationRules: {
+            required: "Password is required",
+            maxLength: 24,
+        },
+    },
+    {
+        label: "Age:",
+        id: "age",
+        type: "number",
+        placeholder: "Age",
+        validationRules: {
+            required: "Age is required",
+            min: {
+                value: 10,
+                message: "Age must be at least 10",
+            },
+            max: {
+                value: 100,
+                message: "Age must be under 100",
+            },
+        },
+    },
+    {
+        label: "Gender:",
+        id: "gender",
+        type: "radio",
+        options: [
+            { label: "Male", value: "Male" },
+            { label: "Female", value: "Female" },
+        ],
+        validationRules: {
+            required: "Gender is required",
+        },
+    },
+];
 
 export const RegistrationPage = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: { errors },
         watch,
     } = useForm();
+
+    const [APIerrors, setAPIErrors] = useState([]);
+
     const onSubmit = async (data) => {
-        await api.registration(data)
+        await api.registration(data, setAPIErrors);
         console.log(data);
-    }
+    };
     console.log(errors);
+
+    
 
     return (
         <>
-        <div className="app-todo">
-            <div className="container">
-                <form
-                    className="registration-form"
-                >
-                    <div className="registration-field">
-                        <label className="center" htmlFor="username">
-                            Username:{" "}
-                        </label>
-                        <input
-                            className="registration-input"
-                            id="username"
-                            type="text"
-                            placeholder="Username"
-                            {...register("username", {
-                                required: "Required field",
-                                maxLength: 24,
-                            })}
-                        />
-                    </div>
-                    <p className="field-error">{errors.username?.message}</p>
-                    <div className="registration-field">
-                        <label className="center" htmlFor="email">
-                            Email:{" "}
-                        </label>
-                        <input
-                            className="registration-input"
-                            id="email"
-                            type="email"
-                            placeholder="Email"
-                            {...register("email", {
-                                required: "Required field",
-                                maxLength: 40,
-                            })}
-                        />
-                    </div>
-                    <p className="field-error">{errors.email?.message}</p>
-                    <div className="registration-field">
-                        <label className="center" htmlFor="password">
-                            Password:{" "}
-                        </label>
-                        <input
-                            className="registration-input"
-                            id="password"
-                            type="password"
-                            placeholder="Password"
-                            {...register("password", {
-                                required: "Required field",
-                                maxLength: 24,
-                            })}
-                        />
-                    </div>
-                    <p className="field-error">{errors.password?.message}</p>
-                    <div className="registration-field">
-                        <label className="center" htmlFor="gender">
-                            Gender:{" "}
-                        </label>
-                        <div id="gender" className="gender-field">
-                            <label
-                                className={`center gender-radio ${
-                                    watch("gender") === "Male" ? "active" : ""
-                                }`}
-                            >
-                                <input
-                                    id="male"
-                                    {...register("gender", {required: "Required field"})}
-                                    type="radio"
-                                    value="Male"
-                                    hidden
-                                />
-                                Male
-                            </label>
-                            <label
-                                className={`center gender-radio ${
-                                    watch("gender") === "Female" ? "active" : ""
-                                }`}
-                            >
-                                <input
-                                    id="female"
-                                    {...register("gender", {required: "Required field"})}
-                                    type="radio"
-                                    value="Female"
-                                    hidden
-                                />
-                                Female
-                            </label>{" "}
+            <div className="app-todo">
+                <div className="container">
+                    <form className="form">
+                        {registrationFields.map((field) => (
+                            <FormInput
+                                key={field.id}
+                                label={field.label}
+                                id={field.id}
+                                type={field.type}
+                                placeholder={field.placeholder}
+                                register={register}
+                                validationRules={field.validationRules}
+                                options={field.options}
+                                watch={watch}
+                            />
+                        ))}
+                        {APIerrors.length > 0 && (
+                            <ul className="error-list">
+                                {APIerrors.map((err, index) => (
+                                    <li key={index} className="field-error">
+                                        {err}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                        <div className="button">
+                            <Button
+                                type="submit"
+                                onClick={handleSubmit(onSubmit)}
+                                className="btn-task"
+                                btnText="Sign Up"
+                            />
                         </div>
-                    </div>
-                    <p className="field-error">{errors.gender?.message}</p>
-                    <div className="registration-field">
-                        <label className="center" htmlFor="age">
-                            Age:
-                        </label>
-                        <input
-                            className="registration-input"
-                            id="age"
-                            type="number"
-                            placeholder="Age"
-                            {...register("age", {
-                                required: "Required field",
-                                max: 100,
-                                min: 10,
-                            })}
-                        />
-                    </div>
-                    <p className="field-error">{errors.age?.message}</p>
-                </form>
-                <div className="center button">
-                    <Button
-                    type="submit"
-                    onClick={handleSubmit(onSubmit)}
-                    className="btn-task"
-                    btnText="Sign Up"
-                />
+                    </form>
                 </div>
             </div>
-        </div>
-         <div className="link">
-         <p>Don't have an account?</p>
-         <Link to="/login">Sign Up</Link>
-     </div>
-   
-     </>
+            <div className="navigation">
+                <p>Already have an account?</p>
+                <Link className="link btn-task" to="/login">Log In</Link>
+            </div>
+        </>
     );
-}
+};

@@ -1,0 +1,31 @@
+.button {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation {
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: #2d3e24;
+    padding: 20px;
+    min-width: 300px;
+    width: 30%;
+    border-radius: 15px;
+}
+
+.link {
+    margin-top: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #6abd45;
+    border-radius: 15px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

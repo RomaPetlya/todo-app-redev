@@ -1,6 +1,7 @@
 .form-field {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 20px;
 }
 
@@ -18,4 +19,41 @@
     width: 100%;
     gap: 10px;
     padding: 40px 0;
+}
+
+.field-error {
+    margin: 10px auto;
+    padding: 10px;
+    width: 100%;
+    color: #ff2c2c;
+    background-color: #ffd549;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+}
+.radio-group {
+    display: flex;
+    width: 25%;
+    background-color: #2d3e24;
+    border: 2px solid #6abd45;
+}
+.radio-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    padding: 8px;
+    transition: 0.15s ease-in;
+}
+.radio-option input {
+    appearance: none;
+}
+.radio-option:hover {
+    background-color: #6abd45;
+    transition: 0.15s ease-in;
+}
+.radio-option.active {
+    background-color: #6abd45;
 }

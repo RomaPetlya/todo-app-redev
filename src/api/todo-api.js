@@ -18,9 +18,15 @@ class ApiService {
             const response = await axios.post(`${this.baseURL}/auth/login`, {email, password});
             const {token} = response.data;
             this.setToken(token);
+            setError([]);
         } catch (error) {
-            console.error('Auth error:', error?.response?.data?.message || error?.response?.data?.errors);
-            setError(error?.response?.data?.message)
+            const validationErrors = error?.response?.data?.errors || [];
+            const credValidationErrors = error?.response?.data?.message;
+            console.error('Auth error:', validationErrors) // - если креды непрваильные
+            console.error('Auth error 2 :',  credValidationErrors)
+            const combinedErrors = validationErrors.length > 0 ? validationErrors.map(err => err?.msg) :[credValidationErrors];
+            console.error('Auth error 3 :', combinedErrors)
+            setError(combinedErrors);
         }
     }
 
@@ -30,6 +36,7 @@ class ApiService {
         return response.data;
     }
     catch (error) {
+        console.error(error);
         console.error(error.response.data.message);
         return error.response.data.message
     }

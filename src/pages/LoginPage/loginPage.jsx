@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "./loginPage.css";
+import "./../comon-page.css";
 import { Button } from "../../components/button/button.jsx";
 import { api } from "../../api/todo-api.js";
 import { Link } from "react-router-dom";
@@ -10,13 +10,12 @@ export function LoginPage() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
     } = useForm();
 
-    const [error, setError] = useState(null);
+    const [APIerrors, setAPIErrors] = useState([]);
 
     const onSubmit = async (data) => {
-        await api.login(data, setError);
+        await api.login(data, setAPIErrors);
         console.log(data);
     };
 
@@ -47,35 +46,47 @@ export function LoginPage() {
     ];
 
     return (
-        <div className="app-todo">
-            <div className="container">
-                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-                    {loginFields.map((field) => (
-                        <FormInput
-                            key={field.id}
-                            label={field.label}
-                            id={field.id}
-                            type={field.type}
-                            placeholder={field.placeholder}
-                            register={register}
-                            validationRules={field.validationRules}
-                            error={errors[field.id]}
-                        />
-                    ))}
-                    <div className="center button">
-                        <Button
-                            type="submit"
-                            className="btn-task"
-                            btnText="Log In"
-                        />
-                    </div>
-                    {error && <div style={{ color: "red" }}>{error}</div>}
-                </form>
-                <div className="link">
-                    <p>Don't have an account?</p>
-                    <Link to="/registration">Sign Up</Link>
+        <>
+            <div className="app-todo">
+                <div className="container">
+                    <form
+                        className="form"
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        {loginFields.map((field) => (
+                            <FormInput
+                                key={field.id}
+                                label={field.label}
+                                id={field.id}
+                                type={field.type}
+                                placeholder={field.placeholder}
+                                register={register}
+                                validationRules={field.validationRules}
+                            />
+                        ))}
+                        {APIerrors.length > 0 && (
+                            <ul className="error-list">
+                                {APIerrors.map((err, index) => (
+                                    <li key={index} className="field-error">
+                                        {err}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                        <div className="button">
+                            <Button
+                                type="submit"
+                                className="btn-task"
+                                btnText="Log In"
+                            />
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
+            <div className="navigation">
+                <p>Don't have an account?</p>
+                <Link className="link btn-task" to="/registration">Sign Up</Link>
+            </div>
+        </>
     );
 }
