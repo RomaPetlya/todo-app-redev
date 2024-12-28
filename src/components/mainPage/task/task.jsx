@@ -27,8 +27,8 @@ const Task = ({ task, onDelete, onToggle, onUpdate }) => {
     } else {
         return (
             <div className="task">
-                <div className={`taskText ${task.isDone ? "done" : ""}`} onClick={() => onToggle(task.id)}>
-                    {task.text}
+                <div className={`taskText ${task.isCompleted ? "done" : ""}`} onClick={() => onToggle(task.id)}>
+                    {task.title}
                 </div>
                 <div className="task-icons">
                     <FontAwesomeIcon

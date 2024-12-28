@@ -6,7 +6,7 @@ export const WithLogger = (WrappedComponent) => {
             if (props.actionType && props.selectedTask) {
                 const date = new Date().toLocaleString();
                 console.log(
-                    `${date} - ${props.selectedTask.text} was ${props.actionType}.`
+                    `${date} - ${props.selectedTask.title} was ${props.actionType}.`
                 );
             }
         }, [props.actionType, props.selectedTask]);

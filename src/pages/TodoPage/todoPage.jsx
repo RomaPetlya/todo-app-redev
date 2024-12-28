@@ -5,46 +5,42 @@ import { TaskInput } from "../../components/mainPage/taskInput/taskInput.jsx";
 import TaskList from "../../components/mainPage/taskList/taskList.jsx";
 import { NoTasks } from "../../components/mainPage/noTasks/noTasks.jsx";
 import { Link } from "react-router-dom";
+import { api } from "../../api/todo-api.js";
+import { useEffect } from "react";
+import { APIerrorsList } from "../../components/APIerrors/apiErrors.jsx";
 
 export const TodoPage = () => {
-    const [tasks, setTasks] = useState([
-        { id: uuidv4(), text: "lala", isDone: false },
-        { id: uuidv4(), text: "dadada", isDone: false },
-    ]);
+    const [tasks, setTasks] = useState([]);
     const [actionType, setActionType] = useState(null);
     const [selectedTask, setSelectedTask] = useState(null);
+    const [APIerrors, setAPIErrors] = useState([]);
 
-    const addTask = (taskText) => {
-        const newTask = { id: uuidv4(), text: taskText, isDone: false };
-        setTasks([...tasks, newTask]);
-        setSelectedTask(newTask);
-        setActionType("added");
+    async function fetchTasks() {
+        const tasks = await api.getTasks(setAPIErrors);
+        setTasks(tasks);
+    }
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+
+    const addTask = async (taskText) => {
+        await api.addTask(taskText, setAPIErrors);
+        fetchTasks();
     };
 
-    const updateTask = (taskId, newText) => {
-        const updatedTasks = tasks.map((task) =>
-            task.id === taskId ? { ...task, text: newText } : task
-        );
-        setTasks(updatedTasks);
-        setSelectedTask(updatedTasks.find((task) => task.id === taskId));
-        setActionType("updated");
+    const updateTask = async (taskId, newText) => {
+        await api.updateTask(taskId, newText, setAPIErrors);
+        fetchTasks();
     };
 
-    const toggleDone = (id) => {
-        const updatedTasks = tasks.map((task) =>
-            task.id === id ? { ...task, isDone: !task.isDone } : task
-        );
-        setTasks(updatedTasks);
-        const taskToLog = updatedTasks.find((task) => task.id === id);
-        setSelectedTask(taskToLog);
-        taskToLog.isDone ? setActionType("done") : setActionType("undone");
+    const toggleDone = async (id) => {
+        await api.toggleCompleted(id, setAPIErrors)
+        fetchTasks();
     };
 
-    const deleteTask = (id) => {
-        const taskToDelete = tasks.find((task) => task.id === id);
-        setTasks(tasks.filter((task) => task.id !== id));
-        setSelectedTask(taskToDelete);
-        setActionType("deleted");
+    const deleteTask = async (id) => {
+        await api.deleteTask(id, setAPIErrors);
+        fetchTasks();
     };
 
     const handleLogout = () => {
@@ -58,6 +54,7 @@ export const TodoPage = () => {
                 <div className="container">
                     <Header />
                     <TaskInput onAdd={addTask} btnText="Add task" />
+                    {APIerrors.length > 0 && <APIerrorsList errors={APIerrors} />}
                     {tasks.length > 0 ? (
                         <TaskList
                             tasks={tasks}

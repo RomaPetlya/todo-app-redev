@@ -124,7 +124,7 @@ export const RegistrationPage = () => {
                                 fieldError={errors[field.id]?.message}
                             />
                         ))}
-                        <APIerrorsList errors={APIerrors} />
+                        {APIerrors.length > 0 && <APIerrorsList errors={APIerrors} />}
                         {successMessage && <p className="success-message">{successMessage}</p>}
                         <div className="button">
                             <Button

@@ -18,11 +18,10 @@ export function LoginPage() {
     const [APIerrors, setAPIErrors] = useState([]);
 
     const onSubmit = async (data) => {
-        await api.login(data, setAPIErrors);
-        if (!APIerrors.length) {
+        const result = await api.login(data, setAPIErrors);
+        if (!result?.length) {
             navigate("/todo");
         }
-        console.log(data);
     };
 
     const loginFields = [
@@ -75,7 +74,7 @@ export function LoginPage() {
                                 fieldError={errors[field.id]?.message}
                             />
                         ))}
-                        <APIerrorsList errors={APIerrors} />
+                        {APIerrors.length > 0 && <APIerrorsList errors={APIerrors} />}
                         <div className="button">
                             <Button
                                 type="submit"
