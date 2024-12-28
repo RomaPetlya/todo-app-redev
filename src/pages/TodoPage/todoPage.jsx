@@ -47,6 +47,11 @@ export const TodoPage = () => {
         setActionType("deleted");
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     return (
         <>
             <main className="app-todo">
@@ -69,7 +74,7 @@ export const TodoPage = () => {
             </main>
             <div className="navigation">
                 <p>Already have finished?</p>
-            <Link className="link btn-task" to="/login">
+            <Link className="link btn-task" to="/login" onClick={handleLogout}>
                 Log out
             </Link>
             </div>

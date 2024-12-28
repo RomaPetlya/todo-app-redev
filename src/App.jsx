@@ -1,20 +1,22 @@
 import "./App.css";
-import {RegistrationPage} from "./pages/RegistrationPage/registrationPage.jsx";
-import {TodoPage} from "./pages/TodoPage/todoPage.jsx";
-import {Route, Routes} from "react-router-dom";
-import {LoginPage} from "./pages/LoginPage/loginPage.jsx";
-import {Navigate} from "react-router-dom";
-
+import { RegistrationPage } from "./pages/RegistrationPage/registrationPage.jsx";
+import { TodoPage } from "./pages/TodoPage/todoPage.jsx";
+import { Route, Routes } from "react-router-dom";
+import { LoginPage } from "./pages/LoginPage/loginPage.jsx";
+import { Navigate } from "react-router-dom";
+import { ProtectedRoute } from "./components/protectedRoute.jsx";
 
 function App() {
     return (
-            <Routes>
-                <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="/login" element={<LoginPage />}></Route>
-                <Route path="/registration" element={<RegistrationPage />}></Route>
-                <Route path="/todo" element={<TodoPage />}></Route>
-            </Routes>
-        )
+        <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<LoginPage />}/>
+            <Route path="/registration" element={<RegistrationPage />}/>
+            <Route element={<ProtectedRoute />}>
+                <Route path="/todo" element={<TodoPage />}/>
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
