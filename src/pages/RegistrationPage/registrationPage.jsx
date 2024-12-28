@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import "./../comon-page.css";
+import "./../basePage.css";
 import { Button } from "../../components/button/button.jsx";
 import { api } from "../../api/todo-api.js";
 import { Link } from "react-router-dom";
 import { FormInput } from "../../components/formField/formField.jsx";
+import { APIerrorsList } from "../../components/APIerrors/apiErrors.jsx";
 
 const registrationFields = [
     {
@@ -105,17 +106,10 @@ export const RegistrationPage = () => {
                                 validationRules={field.validationRules}
                                 options={field.options}
                                 watch={watch}
+                                fieldError={errors[field.id]?.message}
                             />
                         ))}
-                        {APIerrors.length > 0 && (
-                            <ul className="error-list">
-                                {APIerrors.map((err, index) => (
-                                    <li key={index} className="field-error">
-                                        {err}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
+                        <APIerrorsList errors={APIerrors} />
                         <div className="button">
                             <Button
                                 type="submit"

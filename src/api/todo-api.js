@@ -16,14 +16,13 @@ class ApiService {
     async login({email, password}, setError) {
         try {
             const response = await axios.post(`${this.baseURL}/auth/login`, {email, password});
+            console.log(response.data);
             const {token} = response.data;
             this.setToken(token);
             setError([]);
         } catch (error) {
             const validationErrors = error?.response?.data?.errors || [];
             const credValidationErrors = error?.response?.data?.message;
-            console.error('Auth error:', validationErrors) // - если креды непрваильные
-            console.error('Auth error 2 :',  credValidationErrors)
             const combinedErrors = validationErrors.length > 0 ? validationErrors.map(err => err?.msg) :[credValidationErrors];
             console.error('Auth error 3 :', combinedErrors)
             setError(combinedErrors);
@@ -33,12 +32,13 @@ class ApiService {
     async registration ({username, email, password, gender, age}) {
     try {
         const response = await axios.post(`${this.baseURL}/users/register`, {username, email, password, gender, age});
+        console.log(response.data);
         return response.data;
     }
     catch (error) {
         console.error(error);
         console.error(error.response.data.message);
-        return error.response.data.message
+        setError(error.response.data.message);
     }
     // const datareg = {
     //     username : "zxcvb123121231aad31",

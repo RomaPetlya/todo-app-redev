@@ -1,5 +1,7 @@
 import React from "react";
 import "./formField.css";
+import { InputField } from "./inputField";
+import { RadioButton } from "./radioButton";
 
 export function FormInput({
     label,
@@ -10,38 +12,39 @@ export function FormInput({
     validationRules,
     options = [],
     watch,
+    fieldError,
 }) {
+    let FieldComponent;
+
     if (type === "radio") {
-        return (
-            <div className="form-field">
-                <label>{label}</label>
-                <div className={"radio-group"}>
-                    {options.map((option) => (
-                        <label key={option.value} className={`radio-option ${watch(id) === option.value ? "active" : ""}`}>
-                            <input
-                                type="radio"
-                                value={option.value}
-                                {...register(id, validationRules)}
-                                name={id}
-                            />
-                            {option.label}
-                        </label>
-                    ))}
-                </div>
-            </div>
+        FieldComponent = (
+            <RadioButton
+                options={options}
+                id={id}
+                register={register}
+                validationRules={validationRules}
+                watch={watch}
+            />
+        );
+    } else {
+        FieldComponent = (
+            <InputField
+                id={id}
+                type={type}
+                placeholder={placeholder}
+                register={register}
+                validationRules={validationRules}
+            />
         );
     }
 
     return (
         <div className="form-field">
             <label htmlFor={id}>{label}</label>
-            <input
-                id={id}
-                type={type}
-                placeholder={placeholder}
-                {...register(id, validationRules)}
-                className="form-input"
-            />
+            <div className="input-wrapper">
+                {FieldComponent}
+                {fieldError && <p className="field-error">{fieldError}</p>}
+            </div>
         </div>
     );
 }
