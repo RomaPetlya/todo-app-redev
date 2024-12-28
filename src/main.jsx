@@ -5,7 +5,7 @@ import App from "./App.jsx";
 
 
 createRoot(document.getElementById('root')).render(
-    <HashRouter basename="/todo-app-redev">
+    <HashRouter>
         <App />
     </HashRouter>
 )

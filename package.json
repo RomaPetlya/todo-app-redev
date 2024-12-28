@@ -2,7 +2,7 @@
   "name": "todo-app",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://RomaPetlya.github.io/todo-app-redev",
+  "homepage": "/todo-app-redev/#",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
