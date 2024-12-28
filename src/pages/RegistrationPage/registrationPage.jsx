@@ -15,7 +15,10 @@ const registrationFields = [
         placeholder: "Username",
         validationRules: {
             required: "Username is required",
-            maxLength: 24,
+            // maxLength: {
+            //     value: 24,
+            //     message: "Username cannot exceed 24 characters",
+            // },
         },
     },
     {
@@ -29,6 +32,10 @@ const registrationFields = [
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Invalid email format",
             },
+            maxLength: {
+                value: 24,
+                message: "Email cannot exceed 24 characters",
+            },
         },
     },
     {
@@ -38,7 +45,10 @@ const registrationFields = [
         placeholder: "Password",
         validationRules: {
             required: "Password is required",
-            maxLength: 24,
+            maxLength: {
+                value: 24,
+                message: "Password cannot exceed 24 characters",
+            },
         },
     },
     {
@@ -63,8 +73,8 @@ const registrationFields = [
         id: "gender",
         type: "radio",
         options: [
-            { label: "Male", value: "Male" },
-            { label: "Female", value: "Female" },
+            { label: "Male", value: "male" },
+            { label: "Female", value: "female" },
         ],
         validationRules: {
             required: "Gender is required",
@@ -82,13 +92,18 @@ export const RegistrationPage = () => {
 
     const [APIerrors, setAPIErrors] = useState([]);
 
-    const onSubmit = async (data) => {
-        await api.registration(data, setAPIErrors);
-        console.log(data);
-    };
-    console.log(errors);
+    const [successMessage, setSuccessMessage] = useState("");
 
-    
+    const onSubmit = async (data) => {
+        const result = await api.registration(data, setAPIErrors);
+        console.log(data);
+       
+        if (result) {
+            setAPIErrors([]);
+            setSuccessMessage("Registration successful! Please log in.");
+        }
+    };
+    console.log(APIerrors);
 
     return (
         <>
@@ -110,6 +125,7 @@ export const RegistrationPage = () => {
                             />
                         ))}
                         <APIerrorsList errors={APIerrors} />
+                        {successMessage && <p className="success-message">{successMessage}</p>}
                         <div className="button">
                             <Button
                                 type="submit"
@@ -123,7 +139,9 @@ export const RegistrationPage = () => {
             </div>
             <div className="navigation">
                 <p>Already have an account?</p>
-                <Link className="link btn-task" to="/login">Log In</Link>
+                <Link className="link btn-task" to="/login">
+                    Log In
+                </Link>
             </div>
         </>
     );

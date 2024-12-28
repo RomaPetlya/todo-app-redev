@@ -32,3 +32,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.success-message {
+    color: #6abd45;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 20px 0 auto;
+    text-align: center;
+}

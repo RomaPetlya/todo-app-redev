@@ -6,6 +6,7 @@ import { api } from "../../api/todo-api.js";
 import { Link } from "react-router-dom";
 import { FormInput } from "../../components/formField/formField.jsx";
 import { APIerrorsList } from "../../components/APIerrors/apiErrors.jsx";
+import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
     const {
@@ -13,11 +14,14 @@ export function LoginPage() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
+    const navigate = useNavigate();
     const [APIerrors, setAPIErrors] = useState([]);
 
     const onSubmit = async (data) => {
         await api.login(data, setAPIErrors);
+        if (!APIerrors.length) {
+            navigate("/todo");
+        }
         console.log(data);
     };
 
@@ -33,6 +37,10 @@ export function LoginPage() {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                     message: "Invalid email format",
                 },
+                maxLength: {
+                    value: 24,
+                    message: "Email cannot exceed 24 characters",
+                },
             },
         },
         {
@@ -42,7 +50,10 @@ export function LoginPage() {
             placeholder: "Password",
             validationRules: {
                 required: "Password is required",
-                maxLength: 24,
+                maxLength: {
+                    value: 24,
+                    message: "Password cannot exceed 24 characters",
+                },
             },
         },
     ];
@@ -51,10 +62,7 @@ export function LoginPage() {
         <>
             <div className="app-todo">
                 <div className="container">
-                    <form
-                        className="form"
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
+                    <form className="form" onSubmit={handleSubmit(onSubmit)}>
                         {loginFields.map((field) => (
                             <FormInput
                                 key={field.id}
@@ -80,7 +88,9 @@ export function LoginPage() {
             </div>
             <div className="navigation">
                 <p>Don't have an account?</p>
-                <Link className="link btn-task" to="/registration">Sign Up</Link>
+                <Link className="link btn-task" to="/registration">
+                    Sign Up
+                </Link>
             </div>
         </>
     );
