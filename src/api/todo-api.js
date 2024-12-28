@@ -4,7 +4,10 @@ class ApiService {
     constructor(baseURL) {
         this.baseURL = baseURL;
         this.token = localStorage.getItem("token") || null;
-        this.headers = {
+    }
+
+    get headers() {
+        return {
             Authorization: `Bearer ${this.token}`,
         };
     }
