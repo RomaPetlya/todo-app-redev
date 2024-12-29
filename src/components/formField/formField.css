@@ -21,6 +21,7 @@
 
 .radio-group {
     display: flex;
+    min-width: 150px;
     width: 35%;
     background-color: #2d3e24;
     border: 2px solid #6abd45;
