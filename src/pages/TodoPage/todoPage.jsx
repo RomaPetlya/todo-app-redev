@@ -8,9 +8,11 @@ import { Link } from "react-router-dom";
 import { api } from "../../api/todo-api.js";
 import { useEffect } from "react";
 import { APIerrorsList } from "../../components/APIerrors/apiErrors.jsx";
+import { LoadingSpinner } from "../../components/loadingSpinner/loadingSpinner.jsx";
 
 export const TodoPage = () => {
     const [tasks, setTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [actionType, setActionType] = useState(null);
     const [selectedTask, setSelectedTask] = useState(null);
     const [APIerrors, setAPIErrors] = useState([]);
@@ -34,7 +36,7 @@ export const TodoPage = () => {
     };
 
     const toggleDone = async (id) => {
-        await api.toggleCompleted(id, setAPIErrors)
+        await api.toggleCompleted(id, setAPIErrors);
         fetchTasks();
     };
 
@@ -44,37 +46,51 @@ export const TodoPage = () => {
     };
 
     const handleLogout = () => {
+        setIsLoading(true);
         localStorage.removeItem("token");
         navigate("/login");
+        setIsLoading(false);
     };
 
     return (
         <>
-            <main className="app-todo">
-                <div className="container">
-                    <Header />
-                    <TaskInput onAdd={addTask} btnText="Add task" />
-                    {APIerrors.length > 0 && <APIerrorsList errors={APIerrors} />}
-                    {tasks.length > 0 ? (
-                        <TaskList
-                            tasks={tasks}
-                            onDelete={deleteTask}
-                            onToggle={toggleDone}
-                            onUpdate={updateTask}
-                            actionType={actionType}
-                            selectedTask={selectedTask}
-                        />
-                    ) : (
-                        <NoTasks />
-                    )}
-                </div>
-            </main>
-            <div className="navigation">
-                <p>Already have finished?</p>
-            <Link className="link btn-task" to="/login" onClick={handleLogout}>
-                Log out
-            </Link>
-            </div>
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <>
+                    <main className="app-todo">
+                        <div className="container">
+                            <Header />
+                            <TaskInput onAdd={addTask} btnText="Add task" />
+                            {APIerrors.length > 0 && (
+                                <APIerrorsList errors={APIerrors} />
+                            )}
+                            {tasks.length > 0 ? (
+                                <TaskList
+                                    tasks={tasks}
+                                    onDelete={deleteTask}
+                                    onToggle={toggleDone}
+                                    onUpdate={updateTask}
+                                    actionType={actionType}
+                                    selectedTask={selectedTask}
+                                />
+                            ) : (
+                                <NoTasks />
+                            )}
+                        </div>
+                    </main>
+                    <div className="navigation">
+                        <p>Already have finished?</p>
+                        <Link
+                            className="link btn-task"
+                            to="/login"
+                            onClick={handleLogout}
+                        >
+                            Log out
+                        </Link>
+                    </div>
+                </>
+            )}
         </>
     );
 };

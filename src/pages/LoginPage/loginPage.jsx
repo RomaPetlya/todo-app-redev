@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { FormInput } from "../../components/formField/formField.jsx";
 import { APIerrorsList } from "../../components/APIerrors/apiErrors.jsx";
 import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../../components/loadingSpinner/loadingSpinner.jsx";
 
 export function LoginPage() {
     const {
@@ -16,12 +17,15 @@ export function LoginPage() {
     } = useForm();
     const navigate = useNavigate();
     const [APIerrors, setAPIErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data) => {
+        setIsLoading(true);
         const result = await api.login(data, setAPIErrors);
         if (!result?.length) {
             navigate("/todo");
         }
+        setIsLoading(false);
     };
 
     const loginFields = [
@@ -59,38 +63,49 @@ export function LoginPage() {
 
     return (
         <>
-            <div className="app-todo">
-                <div className="container">
-                    <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                        {loginFields.map((field) => (
-                            <FormInput
-                                key={field.id}
-                                label={field.label}
-                                id={field.id}
-                                type={field.type}
-                                placeholder={field.placeholder}
-                                register={register}
-                                validationRules={field.validationRules}
-                                fieldError={errors[field.id]?.message}
-                            />
-                        ))}
-                        {APIerrors.length > 0 && <APIerrorsList errors={APIerrors} />}
-                        <div className="button">
-                            <Button
-                                type="submit"
-                                className="btn-task"
-                                btnText="Log In"
-                            />
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <>
+                    <div className="app-todo">
+                        <div className="container">
+                            <form
+                                className="form"
+                                onSubmit={handleSubmit(onSubmit)}
+                            >
+                                {loginFields.map((field) => (
+                                    <FormInput
+                                        key={field.id}
+                                        label={field.label}
+                                        id={field.id}
+                                        type={field.type}
+                                        placeholder={field.placeholder}
+                                        register={register}
+                                        validationRules={field.validationRules}
+                                        fieldError={errors[field.id]?.message}
+                                    />
+                                ))}
+                                {APIerrors.length > 0 && (
+                                    <APIerrorsList errors={APIerrors} />
+                                )}
+                                <div className="button">
+                                    <Button
+                                        type="submit"
+                                        className="btn-task"
+                                        btnText="Log In"
+                                    />
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div className="navigation">
-                <p>Don't have an account?</p>
-                <Link className="link btn-task" to="/registration">
-                    Sign Up
-                </Link>
-            </div>
+                    </div>
+                    <div className="navigation">
+                        <p>Don't have an account?</p>
+                        <Link className="link btn-task" to="/registration">
+                            Sign Up
+                        </Link>
+                    </div>
+                    </>
+            )}
         </>
     );
 }

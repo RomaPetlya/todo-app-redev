@@ -28,11 +28,11 @@ class ApiService {
             this.setToken(token);
             return [];
         } catch (error) {
-            const validationErrors = error?.response?.data?.errors || [];
+            const validationErrors = error?.response?.data?.errors || [error];
             const credValidationErrors = error?.response?.data?.message;
             const combinedErrors =
                 validationErrors.length > 0
-                    ? validationErrors.map((err) => err?.msg)
+                    ? validationErrors.map((err) => err?.msg || err.message)
                     : [credValidationErrors];
             setError(combinedErrors);
             return combinedErrors;
@@ -121,16 +121,6 @@ class ApiService {
             return [];
         }
     }
-    // const datareg = {
-    //     username : "zxcvb123121231aad31",
-    //     password : "Zxcvb123123123!",
-    //     email : "zxcasdasd123vb@gmail.com",
-    //     gender : "male",
-    //     age : 23,
-    // }
-
-    // const reg = await api.registration(datareg)
-    // console.log(data);
-    // console.log(reg);
 }
+
 export const api = new ApiService("https://todo-redev.herokuapp.com/api");
