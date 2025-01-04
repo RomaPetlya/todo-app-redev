@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Header } from "../../components/mainPage/header/header.jsx";
 import { TaskInput } from "../../components/mainPage/taskInput/taskInput.jsx";
 import TaskList from "../../components/mainPage/taskList/taskList.jsx";
@@ -13,42 +12,46 @@ import { LoadingSpinner } from "../../components/loadingSpinner/loadingSpinner.j
 export const TodoPage = () => {
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [actionType, setActionType] = useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);
+    const [loggerParams, setLoggerParams] = useState({actionType: "", task: ""});
+
     const [APIerrors, setAPIErrors] = useState([]);
 
     async function fetchTasks() {
         const tasks = await api.getTasks(setAPIErrors);
         setTasks(tasks);
+        return tasks;
     }
     useEffect(() => {
         fetchTasks();
     }, []);
 
     const addTask = async (taskText) => {
-        await api.addTask(taskText, setAPIErrors);
-        fetchTasks();
+        const addedTask = await api.addTask(taskText, setAPIErrors);
+        setLoggerParams({actionType: "added", task: addedTask});
+        await fetchTasks();
     };
 
     const updateTask = async (taskId, newText) => {
-        await api.updateTask(taskId, newText, setAPIErrors);
-        fetchTasks();
+        const updatedTask = await api.updateTask(taskId, newText, setAPIErrors);
+        setLoggerParams({actionType: "updated", task: updatedTask});
+        await fetchTasks();
     };
 
     const toggleDone = async (id) => {
-        await api.toggleCompleted(id, setAPIErrors);
-        fetchTasks();
+        const toggledTask = await api.toggleCompleted(id, setAPIErrors);
+        setLoggerParams({actionType: toggledTask.isCompleted ? "completed" : "uncompleted", task: toggledTask});
+        await fetchTasks();
     };
 
     const deleteTask = async (id) => {
-        await api.deleteTask(id, setAPIErrors);
-        fetchTasks();
+        const deletedTask = await api.deleteTask(id, setAPIErrors);
+        setLoggerParams({actionType: "deleted", task: deletedTask});
+        await fetchTasks();
     };
 
     const handleLogout = () => {
         setIsLoading(true);
         localStorage.removeItem("token");
-        navigate("/login");
         setIsLoading(false);
     };
 
@@ -71,8 +74,7 @@ export const TodoPage = () => {
                                     onDelete={deleteTask}
                                     onToggle={toggleDone}
                                     onUpdate={updateTask}
-                                    actionType={actionType}
-                                    selectedTask={selectedTask}
+                                    loggerParams={loggerParams}
                                 />
                             ) : (
                                 <NoTasks />

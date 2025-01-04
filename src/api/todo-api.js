@@ -16,7 +16,33 @@ class ApiService {
         this.token = token;
         localStorage.setItem("token", token);
     }
+    handleError(error, setError) {
+        if (error.response) {
+            const { status, data } = error.response;
 
+            if (data.errors && Array.isArray(data.errors)) {
+                const validationErrors = data.errors.map(
+                    (err) => err?.msg || "Validation error"
+                );
+                setError(validationErrors);
+                return [];
+            }
+
+            if (status === 400 && data.message) {
+                setError([data.message]);
+                return [];
+            }
+        }
+
+        if (error.message) {
+            const networkError = `${error.message}. Check server URL.`;
+            setError([networkError]);
+            return [];
+        }
+
+        setError(["Unknown error"]);
+        return [];
+    }
     async login({ email, password }, setError) {
         try {
             setError([]);
@@ -28,14 +54,7 @@ class ApiService {
             this.setToken(token);
             return [];
         } catch (error) {
-            const validationErrors = error?.response?.data?.errors || [error];
-            const credValidationErrors = error?.response?.data?.message;
-            const combinedErrors =
-                validationErrors.length > 0
-                    ? validationErrors.map((err) => err?.msg || err.message)
-                    : [credValidationErrors];
-            setError(combinedErrors);
-            return combinedErrors;
+            return this.handleError(error, setError);
         }
     }
 
@@ -45,14 +64,9 @@ class ApiService {
                 `${this.baseURL}/users/register`,
                 { username, email, password, gender, age }
             );
-            console.log(response.data);
             return response.data;
         } catch (error) {
-            setError(
-                error?.response?.data?.errors?.map((err) => err?.msg) || [
-                    error?.response?.data?.message,
-                ]
-            );
+            return this.handleError(error, setError);
         }
     }
 
@@ -63,8 +77,7 @@ class ApiService {
             });
             return response.data;
         } catch (error) {
-            setError([error?.response?.data?.message]);
-            return [];
+            return this.handleError(error, setError);
         }
     }
 
@@ -77,8 +90,7 @@ class ApiService {
             );
             return response.data;
         } catch (error) {
-            setError([error?.response?.data?.message]);
-            return [];
+            return this.handleError(error, setError);
         }
     }
 
@@ -89,8 +101,7 @@ class ApiService {
             });
             return response.data;
         } catch (error) {
-            setError([error?.response?.data?.message]);
-            return [];
+            return this.handleError(error, setError);
         }
     }
 
@@ -101,10 +112,9 @@ class ApiService {
                 { id },
                 { headers: this.headers }
             );
-            return response.data;
+            return response.data[0];
         } catch (error) {
-            setError([error?.response?.data?.message]);
-            return [];
+            return this.handleError(error, setError);
         }
     }
 
@@ -117,8 +127,7 @@ class ApiService {
             );
             return response.data;
         } catch (error) {
-            setError([error?.response?.data?.message]);
-            return [];
+            return this.handleError(error, setError);
         }
     }
 }

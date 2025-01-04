@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 export const WithLogger = (WrappedComponent) => {
     return (props) => {
         useEffect(() => {
-            if (props.actionType && props.selectedTask) {
+            if (props.loggerParams) {
+                const {actionType, task} = props.loggerParams;
                 const date = new Date().toLocaleString();
                 console.log(
-                    `${date} - ${props.selectedTask.title} was ${props.actionType}.`
+                    `${date} - Task: id: ${task.id}, title: ${task.title} was ${actionType}.`
                 );
             }
-        }, [props.actionType, props.selectedTask]);
+        }, [props.loggerParams]);
 
         return <WrappedComponent {...props} />;
     };
