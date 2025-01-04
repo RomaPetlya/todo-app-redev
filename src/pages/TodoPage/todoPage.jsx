@@ -57,6 +57,7 @@ export const TodoPage = () => {
 
     return (
         <>
+            
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
@@ -65,6 +66,7 @@ export const TodoPage = () => {
                         <div className="container">
                             <Header />
                             <TaskInput onAdd={addTask} btnText="Add task" />
+                            {console.log(APIerrors)}
                             {APIerrors.length > 0 && (
                                 <APIerrorsList errors={APIerrors} />
                             )}

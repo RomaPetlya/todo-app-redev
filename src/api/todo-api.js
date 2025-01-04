@@ -16,7 +16,8 @@ class ApiService {
         this.token = token;
         localStorage.setItem("token", token);
     }
-    handleError(error, setError) {
+    async handleError(error, setError) {
+        console.log(error);
         if (error.response) {
             const { status, data } = error.response;
 
@@ -45,16 +46,16 @@ class ApiService {
     }
     async login({ email, password }, setError) {
         try {
-            setError([]);
             const response = await axios.post(`${this.baseURL}/auth/login`, {
                 email,
                 password,
             });
+            console.log(response);
             const { token } = response.data;
             this.setToken(token);
-            return [];
+            return response;
         } catch (error) {
-            return this.handleError(error, setError);
+            return await this.handleError(error, setError);
         }
     }
 

@@ -22,7 +22,7 @@ export function LoginPage() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         const result = await api.login(data, setAPIErrors);
-        if (!result?.length) {
+        if (result && result.status === 200) {
             navigate("/todo");
         }
         setIsLoading(false);
@@ -88,6 +88,7 @@ export function LoginPage() {
                                 {APIerrors.length > 0 && (
                                     <APIerrorsList errors={APIerrors} />
                                 )}
+                                {console.log(APIerrors)}
                                 <div className="button">
                                     <Button
                                         type="submit"
