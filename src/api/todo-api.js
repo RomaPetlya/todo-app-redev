@@ -16,8 +16,8 @@ class ApiService {
         this.token = token;
         localStorage.setItem("token", token);
     }
+    
     async handleError(error, setError) {
-        console.log(error);
         if (error.response) {
             const { status, data } = error.response;
 
@@ -26,31 +26,26 @@ class ApiService {
                     (err) => err?.msg || "Validation error"
                 );
                 setError(validationErrors);
-                return [];
             }
 
             if (status === 400 && data.message) {
                 setError([data.message]);
-                return [];
             }
         }
 
         if (error.message) {
             const networkError = `${error.message}. Check server URL.`;
             setError([networkError]);
-            return [];
         }
-
         setError(["Unknown error"]);
-        return [];
     }
+
     async login({ email, password }, setError) {
         try {
             const response = await axios.post(`${this.baseURL}/auth/login`, {
                 email,
                 password,
             });
-            console.log(response);
             const { token } = response.data;
             this.setToken(token);
             return response;

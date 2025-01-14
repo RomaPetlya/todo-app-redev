@@ -88,7 +88,6 @@ export function LoginPage() {
                                 {APIerrors.length > 0 && (
                                     <APIerrorsList errors={APIerrors} />
                                 )}
-                                {console.log(APIerrors)}
                                 <div className="button">
                                     <Button
                                         type="submit"

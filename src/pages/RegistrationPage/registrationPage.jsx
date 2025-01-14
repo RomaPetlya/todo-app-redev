@@ -15,10 +15,10 @@ const registrationFields = [
         placeholder: "Username",
         validationRules: {
             required: "Username is required",
-            // maxLength: {
-            //     value: 24,
-            //     message: "Username cannot exceed 24 characters",
-            // },
+            maxLength: {
+                value: 24,
+                message: "Username cannot exceed 24 characters",
+            },
         },
     },
     {
@@ -96,14 +96,11 @@ export const RegistrationPage = () => {
 
     const onSubmit = async (data) => {
         const result = await api.registration(data, setAPIErrors);
-        console.log(data);
-       
         if (result) {
             setAPIErrors([]);
             setSuccessMessage("Registration successful! Please log in.");
         }
     };
-    console.log(APIerrors);
 
     return (
         <>
