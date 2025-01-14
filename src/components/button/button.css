@@ -1,5 +1,6 @@
 .btn-task {
     all: unset;
+    min-width: 100px;
     width: 15%;
     padding: 10px 20px;
     background-color: #6abd45;

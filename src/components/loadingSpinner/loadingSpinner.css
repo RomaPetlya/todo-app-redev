@@ -1,0 +1,16 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading-spinner {
+    font-size: 3rem;
+}
+
+.loading-text {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}

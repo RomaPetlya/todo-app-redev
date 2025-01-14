@@ -3,8 +3,8 @@ import "./task.css";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TaskUpdate } from "../updateTask/updateTask";
-import { WithLogger } from "../../withLogger/withLogger";
+import { TaskUpdate } from "../todoUpdate/updateTask.jsx";
+import { WithLogger } from "../../withLogger/withLogger.jsx";
 
 const Task = ({ task, onDelete, onToggle, onUpdate }) => {
     const [isEditable, setEditable] = useState(false);
@@ -27,8 +27,8 @@ const Task = ({ task, onDelete, onToggle, onUpdate }) => {
     } else {
         return (
             <div className="task">
-                <div className={`taskText ${task.isDone ? "done" : ""}`} onClick={() => onToggle(task.id)}>
-                    {task.text}
+                <div className={`taskText ${task.isCompleted ? "done" : ""}`} onClick={() => onToggle(task.id)}>
+                    {task.title}
                 </div>
                 <div className="task-icons">
                     <FontAwesomeIcon

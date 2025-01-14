@@ -2,7 +2,7 @@
   "name": "todo-app",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://RomaPetlya.github.io/todo-app-redev",
+  "homepage": "todo-app-redev",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
@@ -16,8 +16,11 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "axios": "^1.7.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
+    "react-router-dom": "^7.0.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
